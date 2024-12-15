@@ -1,57 +1,83 @@
 #include <glad/glad.h>  
 #include <GLFW/glfw3.h>
 #include <iostream>
-static void framebuffer_size_callback(GLFWwindow* window, int width, int height)
-{
-	glViewport(0, 0, width, height);
-}
-
-
-void processInput(GLFWwindow* window)
-{
-	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-		glfwSetWindowShouldClose(window, true);
-}
+#include "WindowManager.h"
+#include "Renderer.h"
+#include "InputHandler.h"
+#include "VertexBuffers.h"
+#include "Shader.h"
 
 int main()
 {
-    glfwInit();
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); // Set the major version of OpenGL
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3); // Set the minor version of OpenGL both to 3
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // Set the OpenGL profile to core, (this means we'll use modern OpenGL) and based on the GLAD website, we need to set this to core profile to make it work.
 
-	GLFWwindow* window = glfwCreateWindow(800, 600, "LearnOpenGL", NULL, NULL);
-	if (window == NULL)
+	WindowManager window;
+	if (!window.init(1200, 800, "LearnOpenGL"))
 	{
-		std::cout << "Failed to create GLFW window" << std::endl;
-		glfwTerminate();
 		return -1;
 	}
-	glfwMakeContextCurrent(window);
+	Renderer renderer(window.getWindow());
+	InputHandler inputHandler(window.getWindow());
 
-	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) // GLAD is dependent on the GLFW window context, so we need to initialize GLAD after we've created the window and its context.
-	{
-		std::cout << "Failed to initialize GLAD" << std::endl;
-		return -1;
+	// 0. Create Vertex Array Object
+	unsigned int vao;
+	glGenVertexArrays(1, &vao);
+	glBindVertexArray(vao); // Bind the VAO
+
+
+	
+	// 1. Create and bind VBO
+	VertexBuffers vertexBuffers(1);
+	//vertexBuffers.CreateBuffers(1);
+	vertexBuffers.BindVertexBuffers(GL_ARRAY_BUFFER);
+
+	// 2. Copy vertices to VBO
+	float vertices[] = {
+		-0.5f, -0.5f, 0.0f, // left
+		 0.5f, -0.5f, 0.0f, // right
+		 0.0f,  0.5f, 0.0f 
+	};
+	vertexBuffers.AddVertices(vertices);
+
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+
+
+
+
+
+
+	// X. Create and compile the vertex shader
+	Shader shader;
+	shader.CreateVertexShader(1);
+	shader.CreateFragmentShader(1);
+	shader.CreateShaderProgram();
+	shader.UseShaderProgram();
+
+
+
+
+	// Main loop
+	while (!window.shouldClose()) {
+		inputHandler.processInput();
+		renderer.render();
+
+		shader.UseShaderProgram();
+
+		glBindVertexArray(vao); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
+		glDrawArrays(GL_TRIANGLES, 0, 3);
+		GLenum err;
+		while ((err = glGetError()) != GL_NO_ERROR) {
+			std::cerr << "OpenGL Error: " << err << std::endl;
+		}
+
+		
+
+
+		window.swapBuffersAndPollEvents();
 	}
-	glViewport(0, 0, 800, 600); // Set the viewport size to be the same as the window size
-
-	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-	// render loop
-	while (!glfwWindowShouldClose(window))
-	{
-		// input
-		processInput(window);
-
-		// rendering commands here
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
-
-		// check and call events and swap the buffers
-		glfwPollEvents();
-		glfwSwapBuffers(window);
-	}
-	glfwTerminate(); // Terminate GLFW, clearing all previously allocated GLFW resources.
+	window.~WindowManager();
+	
+	
 	return 0;
 }
 

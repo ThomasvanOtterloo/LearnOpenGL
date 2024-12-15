@@ -16,6 +16,12 @@
     <Filter Include="src">
       <UniqueIdentifier>{ac004850-af33-4530-8676-bbc0269fa1ba}</UniqueIdentifier>
     </Filter>
+    <Filter Include="res">
+      <UniqueIdentifier>{dcecd0a4-9f7e-40ae-b130-7acc1a147f08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res\shaders">
+      <UniqueIdentifier>{e26bf946-d844-478a-9421-0f8e9ba7c66d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -24,5 +30,51 @@
     <ClCompile Include="..\..\..\..\..\..\..\Downloads\src\glad.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="WindowManager.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="InputHandler.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexBuffers.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderLoader.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="WindowManager.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="InputHandler.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexBuffers.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderLoader.h">
+      <Filter>src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Vertex.shader">
+      <Filter>res\shaders</Filter>
+    </None>
+    <None Include="Fragment.shader">
+      <Filter>res\shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>
