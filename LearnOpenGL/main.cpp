@@ -28,22 +28,17 @@ int main()
 
 	// 2. Copy vertices to VBO
 
-	//float vertices[] = {
-	//	-0.5f, -0.5f, 0.0f, // left
-	//	 0.5f, -0.5f, 0.0f, // right
-	//	 0.0f,  0.5f, 0.0f  // top
-	//};
+	float vertices[] = {
+		// first triangle
+		-0.9f, -0.5f, 0.0f,  // left 
+		-0.0f, -0.5f, 0.0f,  // right
+		-0.45f, 0.5f, 0.0f,  // top 
+		// second triangle
+		0.0f, -0.5f, 0.0f,  // left
+		0.9f, -0.5f, 0.0f,  // right
+		0.45f, 0.5f, 0.0f   // top 
+	};
 
-	float vertices[] = { // creates a rectangle with 2 triangles
-	 0.5f,  0.5f, 0.0f,  // top right
-	 0.5f, -0.5f, 0.0f,  // bottom right
-	-0.5f, -0.5f, 0.0f,  // bottom left
-	-0.5f,  0.5f, 0.0f   // top left 
-	};
-	unsigned int indices[] = {  // note that we start from 0!
-		0, 1, 3,   // first triangle
-		1, 2, 3    // second triangle
-	};
 
 	// print size of vert
 	std::cout << "1Size: " << sizeof(vertices) << std::endl;// prints 36
@@ -61,11 +56,13 @@ int main()
 	vaoManager.SetAttributePointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 
 
-	// 5. Create and bind EBO (so VBO first, then VAO, then EBO)
-	ElementBuffer elementBuffer;
+	// 5. Create and bind EBO (so VBO first, then VAO, then EBO) // EBO is optional here 
+	// because we are using glDrawArrays
+
+	/*ElementBuffer elementBuffer;
 	elementBuffer.CreateElementBuffer();
 	elementBuffer.BindElementBuffer();
-	elementBuffer.AddIndices(indices, sizeof(indices));
+	elementBuffer.AddIndices(indices, sizeof(indices));*/
 
 
 
@@ -89,8 +86,11 @@ int main()
 		shader.UseShaderProgram();
 
 		vaoManager.BindVAO(); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+
+
+
 
 		window.swapBuffersAndPollEvents();
 	}
