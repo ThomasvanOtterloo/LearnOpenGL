@@ -1,7 +1,7 @@
 #pragma once
 
 #include <glad/glad.h> // include glad to get all the required OpenGL headers
-
+#include <string>
 class Shader
 {
 private:
@@ -14,9 +14,9 @@ public:
 	// constructor reads and builds the shader
 	Shader();
 	~Shader();
-	void CreateVertexShader(unsigned int id);
-	void CreateFragmentShader(unsigned int id);
-	void CreateShaderProgram();
+	GLuint CreateVertexShader(std::string path);
+	GLuint CreateFragmentShader(std::string path);
+	void CreateShaderProgram(unsigned int vertexShader, unsigned int fragmentShader);
 	void UseShaderProgram();
 	unsigned int GetShaderProgram();
 

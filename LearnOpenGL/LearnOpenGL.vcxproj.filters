@@ -88,5 +88,8 @@
     <None Include="Fragment.shader">
       <Filter>res\shaders</Filter>
     </None>
+    <None Include="Fragment2.shader">
+      <Filter>res\shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

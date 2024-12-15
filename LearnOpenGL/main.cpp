@@ -77,10 +77,18 @@ int main()
 
 	// X. Create and compile the vertex shader
 	Shader shader;
-	shader.CreateVertexShader(1);
-	shader.CreateFragmentShader(1);
-	shader.CreateShaderProgram();
+	GLint vertexShader = shader.CreateVertexShader("C:/Users/Thomas/Desktop/school/SelfStudy/OpenGL/Projects/LearnOpenGL/LearnOpenGL/Vertex.shader");
+	GLint fragmentShader = shader.CreateFragmentShader("C:/Users/Thomas/Desktop/school/SelfStudy/OpenGL/Projects/LearnOpenGL/LearnOpenGL/Fragment.shader");
+	shader.CreateShaderProgram(vertexShader, fragmentShader);
 	shader.UseShaderProgram();
+
+	//create a second shader program
+	Shader shader2;
+	GLint vertexShader2 = shader2.CreateVertexShader("C:/Users/Thomas/Desktop/school/SelfStudy/OpenGL/Projects/LearnOpenGL/LearnOpenGL/Vertex.shader");
+	GLint fragmentShader2 = shader2.CreateFragmentShader("C:/Users/Thomas/Desktop/school/SelfStudy/OpenGL/Projects/LearnOpenGL/LearnOpenGL/Fragment2.shader");
+	shader2.CreateShaderProgram(vertexShader2, fragmentShader2);
+	shader2.UseShaderProgram();
+
 
 
 
@@ -97,6 +105,7 @@ int main()
 		vaoManager.BindVAO(0);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 
+		shader2.UseShaderProgram();
 		// Bind and draw the second VAO (VAO 1)
 		vaoManager.BindVAO(1);
 		glDrawArrays(GL_TRIANGLES, 0, 3);

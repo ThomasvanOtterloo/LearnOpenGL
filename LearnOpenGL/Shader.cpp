@@ -3,6 +3,7 @@
 #include <iostream>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <string>
 
 Shader::Shader()
 {
@@ -12,14 +13,13 @@ Shader::~Shader()
 {
 }
 
-void Shader::CreateVertexShader(unsigned int id)
+GLuint Shader::CreateVertexShader(std::string path)
 {
 	vertexShader = glCreateShader(GL_VERTEX_SHADER);
 
-
 	// Retrieve the shader source code from the file
 	ShaderLoader shaderLoader;
-	const GLchar* shaderSource = shaderLoader.LoadShader("C:/Users/Thomas/Desktop/school/SelfStudy/OpenGL/Projects/LearnOpenGL/LearnOpenGL/Vertex.shader");
+	const GLchar* shaderSource = shaderLoader.LoadShader(path);
 	
 	// Attach the shader source code to the shader object
 	glShaderSource(vertexShader, 1, &shaderSource, NULL);
@@ -30,15 +30,17 @@ void Shader::CreateVertexShader(unsigned int id)
 
 	// check for shader compilation errors
 	CheckShaderCompilation(vertexShader);
+
+	return vertexShader;
 }
 
-void Shader::CreateFragmentShader(unsigned int id)
+GLuint Shader::CreateFragmentShader(std::string path)
 {
 	fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 
 	// Retrieve the shader source code from the file
 	ShaderLoader shaderLoader;
-	const GLchar* shaderSource = shaderLoader.LoadShader("C:/Users/Thomas/Desktop/school/SelfStudy/OpenGL/Projects/LearnOpenGL/LearnOpenGL/Fragment.shader");
+	const GLchar* shaderSource = shaderLoader.LoadShader(path);
 
 	// Attach the shader source code to the shader object
 	glShaderSource(fragmentShader, 1, &shaderSource, NULL);
@@ -49,9 +51,11 @@ void Shader::CreateFragmentShader(unsigned int id)
 
 	// check for shader compilation errors
 	CheckShaderCompilation(fragmentShader);
+
+	return fragmentShader;
 }
 
-void Shader::CreateShaderProgram()
+void Shader::CreateShaderProgram(unsigned int vertexShader, unsigned int fragmentShader)
 {
 	shaderProgram = glCreateProgram();
 
