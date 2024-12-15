@@ -21,7 +21,7 @@ public:
 	}*/
 
 	void BindVertexBuffers(GLenum type);
-	void AddVertices(float* vertices);
+	void AddVertices(float* vertices, size_t size);
 
 
 private:

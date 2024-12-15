@@ -73,23 +73,12 @@ void Shader::UseShaderProgram()
 {
 	glUseProgram(shaderProgram);
 
-	int success;
-	char infoLog[512];
-
-	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-	if (!success) {
-		glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
-		std::cerr << "Program Linking Error: " << infoLog << std::endl;
-	}
 }
 
 unsigned int Shader::GetShaderProgram()
 {
 	return shaderProgram;
 }
-
-
-
 
 void Shader::CheckShaderCompilation(unsigned int shader)
 {

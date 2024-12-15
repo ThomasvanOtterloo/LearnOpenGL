@@ -34,9 +34,11 @@ int main()
 	float vertices[] = {
 		-0.5f, -0.5f, 0.0f, // left
 		 0.5f, -0.5f, 0.0f, // right
-		 0.0f,  0.5f, 0.0f 
+		 0.0f,  0.5f, 0.0f  // top
 	};
-	vertexBuffers.AddVertices(vertices);
+	// print size of vert
+	std::cout << "1Size: " << sizeof(vertices) << std::endl;// prints 36
+	vertexBuffers.AddVertices(vertices, sizeof(vertices)); 
 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
