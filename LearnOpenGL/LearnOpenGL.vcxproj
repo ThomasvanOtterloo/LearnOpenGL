@@ -150,19 +150,23 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\..\..\..\Downloads\src\glad.c" />
+    <ClCompile Include="ElementBuffer.cpp" />
     <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderLoader.cpp" />
+    <ClCompile Include="VAOManager.cpp" />
     <ClCompile Include="VertexBuffers.cpp" />
     <ClCompile Include="WindowManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ElementBuffer.h" />
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderLoader.h" />
+    <ClInclude Include="VAOManager.h" />
     <ClInclude Include="VertexBuffers.h" />
     <ClInclude Include="WindowManager.h" />
   </ItemGroup>

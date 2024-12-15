@@ -48,6 +48,12 @@
     <ClCompile Include="ShaderLoader.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="VAOManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ElementBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WindowManager.h">
@@ -66,6 +72,12 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="ShaderLoader.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="VAOManager.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="ElementBuffer.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
