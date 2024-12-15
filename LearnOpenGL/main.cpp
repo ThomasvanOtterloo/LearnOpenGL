@@ -22,38 +22,46 @@ int main()
 
 
 	
-	// 1. Create and bind VBO
-	VertexBuffers vertexBuffers(1);
-	vertexBuffers.BindVertexBuffers(GL_ARRAY_BUFFER);
 
-	// 2. Copy vertices to VBO
+	
 
+	// 1. create vertices
 	float vertices[] = {
 		// first triangle
 		-0.9f, -0.5f, 0.0f,  // left 
 		-0.0f, -0.5f, 0.0f,  // right
 		-0.45f, 0.5f, 0.0f,  // top 
+	};
+
+	float vertices2[] = {
 		// second triangle
 		0.0f, -0.5f, 0.0f,  // left
 		0.9f, -0.5f, 0.0f,  // right
 		0.45f, 0.5f, 0.0f   // top 
 	};
+	// 2. Create and bind VBOs and add vertices
+	VertexBuffers vertexBuffers(2); // 2 because we have 2 VBOs
+	VAOManager vaoManager(2);       // 2 because we have 2 VAOs
 
+	// First triangle setup
+	vaoManager.BindVAO(0); // Bind the first VAO
+	vertexBuffers.BindVertexBuffers(GL_ARRAY_BUFFER, 0); // Bind the first VBO
 
-	// print size of vert
-	std::cout << "1Size: " << sizeof(vertices) << std::endl;// prints 36
-	vertexBuffers.AddVertices(vertices, sizeof(vertices)); 
-
-
-
-
-
-	// 3. Create Vertex Array Object VAO
-	VAOManager vaoManager;
-	vaoManager.CreateVAO();
-
-	// 4. Set vertex attributes pointers to VBO and enable
+	vertexBuffers.AddVertices(vertices, sizeof(vertices)); // Add vertices to the first VBO
 	vaoManager.SetAttributePointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+
+
+
+	// Second triangle setup
+	vaoManager.BindVAO(1); // Bind the second VAO
+	vertexBuffers.BindVertexBuffers(GL_ARRAY_BUFFER, 1); // Bind the second VBO
+
+	vertexBuffers.AddVertices(vertices2, sizeof(vertices2)); // Add vertices to the second VBO
+	vaoManager.SetAttributePointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+
+	
+
+
 
 
 	// 5. Create and bind EBO (so VBO first, then VAO, then EBO) // EBO is optional here 
@@ -85,11 +93,13 @@ int main()
 
 		shader.UseShaderProgram();
 
-		vaoManager.BindVAO(); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
+		// Bind and draw the first VAO (VAO 0)
+		vaoManager.BindVAO(0);
+		glDrawArrays(GL_TRIANGLES, 0, 3);
 
-		glDrawArrays(GL_TRIANGLES, 0, 6);
-
-
+		// Bind and draw the second VAO (VAO 1)
+		vaoManager.BindVAO(1);
+		glDrawArrays(GL_TRIANGLES, 0, 3);
 
 
 		window.swapBuffersAndPollEvents();

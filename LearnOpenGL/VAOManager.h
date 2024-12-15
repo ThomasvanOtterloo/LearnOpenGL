@@ -7,12 +7,12 @@ class VAOManager
 {
 private:
 	unsigned int m_VAO;
+	unsigned int* VAOs;
 
 public:
-	VAOManager();
+	VAOManager(unsigned int size);
 	~VAOManager();
-	void CreateVAO();
-	void BindVAO();
+	void BindVAO(unsigned int index);
 	void UnbindVAO();
 
 	void SetAttributePointer(unsigned int index, 

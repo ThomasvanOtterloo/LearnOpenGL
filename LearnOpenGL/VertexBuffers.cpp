@@ -5,20 +5,36 @@
 
 VertexBuffers::VertexBuffers(unsigned int size)
 {
-	if (size > 1)
-	{
-		glGenBuffers(size, &VBO);
-	}
-	else
-	{
-		glGenBuffers(1, &VBO);
-	}
+    if (size > 1)
+    {
+        VBOs = new unsigned int[size];  // Dynamically allocate array
+        glGenBuffers(size, VBOs);       // Generate multiple VBOs
+    }
+    else
+    {
+        VBOs = nullptr;                 // No array needed
+        glGenBuffers(1, &VBO);          // Generate single VBO
+    }
+}
+
+VertexBuffers::~VertexBuffers()
+{
+    if (VBOs)
+    {
+        delete[] VBOs;  // Free dynamically allocated array
+    }
 }
 
 
-void VertexBuffers::BindVertexBuffers(GLenum type)
+void VertexBuffers::BindVertexBuffers(GLenum type, unsigned int index)
 {
-	glBindBuffer(type, VBO);
+    if (VBOs) {
+        glBindBuffer(type, VBOs[index]);
+    }
+    else {
+        glBindBuffer(type, VBO); // For single VBO case
+    }
+
 }
 
 void VertexBuffers::AddVertices(float* vertices, size_t size)

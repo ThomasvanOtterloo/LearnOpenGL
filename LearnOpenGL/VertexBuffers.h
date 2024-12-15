@@ -7,23 +7,16 @@ class VertexBuffers
 {
 public:
 	VertexBuffers(unsigned int size);
+	~VertexBuffers();
 
-	/*template <typename T>
-	void CreateBuffers(unsigned int amount) {
-		if (size > 0)
-		{
-			glGenBuffers(size, &VBO);
-		}
-		else
-		{
-			glGenBuffers(1, &VBO);
-		}
-	}*/
 
-	void BindVertexBuffers(GLenum type);
+
+	void BindVertexBuffers(GLenum type, unsigned int index);
 	void AddVertices(float* vertices, size_t size);
 
 
 private:
-	unsigned int VBO;
+	unsigned int VBO;      // If size == 1, use this single VBO.
+	unsigned int* VBOs;    // Pointer to array of VBOs when size > 1.
+
 };
