@@ -12,7 +12,7 @@ private:
 public:
 	VAOManager(unsigned int size);
 	~VAOManager();
-	void BindVAO(unsigned int index);
+	void BindVAO(unsigned int index = 0);
 	void UnbindVAO();
 
 	void SetAttributePointer(unsigned int index, 

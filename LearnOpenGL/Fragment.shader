@@ -1,13 +1,12 @@
 #version 330 core
-
 out vec4 FragColor;
+  
+in vec3 ourColor;
+in vec2 TexCoord;
 
-in vec4 vertexColor; // the input variable from the vertex shader (same name and same type)  
-
-
-uniform vec4 ourUniColor; // we set this variable in the OpenGL code.
+uniform sampler2D ourTexture;
 
 void main()
 {
-    FragColor = ourUniColor;
-} 
+    FragColor = texture(ourTexture, TexCoord);
+}

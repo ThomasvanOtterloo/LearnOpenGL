@@ -156,6 +156,7 @@
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderLoader.cpp" />
+    <ClCompile Include="stb_image.cpp" />
     <ClCompile Include="VAOManager.cpp" />
     <ClCompile Include="VertexBuffers.cpp" />
     <ClCompile Include="WindowManager.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderLoader.h" />
+    <ClInclude Include="stb_image.h" />
     <ClInclude Include="VAOManager.h" />
     <ClInclude Include="VertexBuffers.h" />
     <ClInclude Include="WindowManager.h" />
@@ -174,6 +176,9 @@
     <None Include="Fragment.shader" />
     <None Include="Fragment2.shader" />
     <None Include="Vertex.shader" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\..\..\..\..\Downloads\container.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

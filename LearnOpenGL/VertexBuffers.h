@@ -11,7 +11,7 @@ public:
 
 
 
-	void BindVertexBuffers(GLenum type, unsigned int index);
+	void BindVertexBuffers(GLenum type, unsigned int index = 0);
 	void AddVertices(float* vertices, size_t size);
 
 
