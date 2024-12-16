@@ -90,7 +90,10 @@ int main()
 	shader2.UseShaderProgram();
 
 
-
+	// Query the maximum number of vertex attributes supported by the GPU
+	int nrAttributes;
+	glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes);
+	std::cout << "Maximum nr of vertex attributes supported: " << nrAttributes << std::endl;
 
 
 	// Main loop
@@ -99,7 +102,16 @@ int main()
 
 		renderer.render();
 
+
+		float timeValue = glfwGetTime();
+		float greenValue = (sin(timeValue) / 2.0f) + 0.5f;
+		int vertexColorLocation = shader.GetUniformLocation("ourColor");
+		
 		shader.UseShaderProgram();
+		glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
+
+
+		
 
 		// Bind and draw the first VAO (VAO 0)
 		vaoManager.BindVAO(0);

@@ -20,6 +20,7 @@ public:
 	void UseShaderProgram();
 	unsigned int GetShaderProgram();
 
+	int GetUniformLocation(const char* uniformName);
 
 
 

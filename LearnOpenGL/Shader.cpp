@@ -84,6 +84,12 @@ unsigned int Shader::GetShaderProgram()
 	return shaderProgram;
 }
 
+int Shader::GetUniformLocation(const char* uniformName)
+{
+	
+	return glGetUniformLocation(shaderProgram, uniformName);
+}
+
 void Shader::CheckShaderCompilation(unsigned int shader)
 {
 	int success;
