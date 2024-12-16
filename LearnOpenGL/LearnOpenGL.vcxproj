@@ -157,6 +157,7 @@
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderLoader.cpp" />
     <ClCompile Include="stb_image.cpp" />
+    <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="VAOManager.cpp" />
     <ClCompile Include="VertexBuffers.cpp" />
     <ClCompile Include="WindowManager.cpp" />
@@ -168,6 +169,7 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderLoader.h" />
     <ClInclude Include="stb_image.h" />
+    <ClInclude Include="TextureManager.h" />
     <ClInclude Include="VAOManager.h" />
     <ClInclude Include="VertexBuffers.h" />
     <ClInclude Include="WindowManager.h" />
