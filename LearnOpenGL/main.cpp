@@ -110,9 +110,10 @@ int main()
 		float timeValue = glfwGetTime();
 		float greenValue = (sin(timeValue) / 2.0f) + 0.5f;
 		int vertexColorLocation = shader.GetUniformLocation("ourUniColor");
-
+		float offset = 0.05f;
+		float positionLocation = shader.GetUniformLocation("offset");
 		shader.UseShaderProgram();
-		
+		glUniform1f(positionLocation, offset); // move the second triangle more to the right
 		glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
 
 
@@ -126,6 +127,9 @@ int main()
 		// Bind and draw the second VAO (VAO 1)
 		vaoManager.BindVAO(1);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
+
+		shader2.GetUniformLocation("offset");
+		glUniform1f(positionLocation, -offset); // move the first triangle more to the left
 
 
 		window.swapBuffersAndPollEvents();
