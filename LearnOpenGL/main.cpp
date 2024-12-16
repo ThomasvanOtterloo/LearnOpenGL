@@ -35,9 +35,9 @@ int main()
 
 	float vertices2[] = {
 		// second triangle
-		0.0f, -0.5f, 0.0f,  // left
-		0.9f, -0.5f, 0.0f,  // right
-		0.45f, 0.5f, 0.0f   // top 
+		0.0f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, // left
+		0.9f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,// right
+		0.45f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f// top 
 	};
 	// 2. Create and bind VBOs and add vertices
 	VertexBuffers vertexBuffers(2); // 2 because we have 2 VBOs
@@ -56,8 +56,12 @@ int main()
 	vaoManager.BindVAO(1); // Bind the second VAO
 	vertexBuffers.BindVertexBuffers(GL_ARRAY_BUFFER, 1); // Bind the second VBO
 
-	vertexBuffers.AddVertices(vertices2, sizeof(vertices2)); // Add vertices to the second VBO
-	vaoManager.SetAttributePointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	// Add vertices to the second VBO
+	vertexBuffers.AddVertices(vertices2, sizeof(vertices2)); 
+	// position attribute
+	vaoManager.SetAttributePointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+	// color attribute
+	vaoManager.SetAttributePointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
 
 	
 
@@ -105,9 +109,10 @@ int main()
 
 		float timeValue = glfwGetTime();
 		float greenValue = (sin(timeValue) / 2.0f) + 0.5f;
-		int vertexColorLocation = shader.GetUniformLocation("ourColor");
-		
+		int vertexColorLocation = shader.GetUniformLocation("ourUniColor");
+
 		shader.UseShaderProgram();
+		
 		glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
 
 
