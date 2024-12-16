@@ -2,7 +2,7 @@
 #version 330 core // version of GLSL or OpenGL
 layout (location = 0) in vec3 aPos; 
 
-layout (location = 1) in vec3 aColor; 
+layout (location = 0) in vec3 aColor; 
 
 out vec3 ourColor; // output a color to the fragment shader
 out vec4 vertexColor; // output of the vertex shader, which is passed to the fragment shader.
