@@ -38,9 +38,19 @@ int main()
 	
 	TextureManager textureManager(1);
 	textureManager.BindTexture();
-	textureManager.LoadTexture("C:/Users/Thomas/Downloads/container.jpg");
+	textureManager.LoadTexture("C:/Users/Thomas/Downloads/container.jpg", GL_RGB);
 	textureManager.SetTextureWrappingAndFiltering();
-	unsigned int texture = textureManager.getTextureId();
+	unsigned int texture1 = textureManager.getTextureId();
+
+
+
+
+	TextureManager textureManager2(1);
+	textureManager2.BindTexture();
+	textureManager2.FlipTexture();
+	textureManager2.LoadTexture("C:/Users/Thomas/Downloads/awesomeface.png", GL_RGBA);
+	textureManager2.SetTextureWrappingAndFiltering();
+	unsigned int texture2 = textureManager2.getTextureId();
 
 
 
@@ -85,6 +95,10 @@ int main()
 	shader.CreateShaderProgram(vertexShader, fragmentShader);
 	shader.UseShaderProgram();
 
+	// Set the texture uniform in the shader
+	glUniform1i(glGetUniformLocation(shader.GetShaderProgram(), "texture1"), 0);
+	glUniform1i(glGetUniformLocation(shader.GetShaderProgram(), "texture2"), 1);
+
 
 
 	// Main loop
@@ -93,11 +107,14 @@ int main()
 
 		renderer.render();
 
+		
+		
+		
+		// bind textures on corresponding texture units
+		textureManager.ActivateTexture(0);
+		textureManager2.ActivateTexture(1);
+
 		shader.UseShaderProgram();
-
-		// Bind and draw the first VAO (VAO 0)
-
-		glBindTexture(GL_TEXTURE_2D, texture);
 		vaoManager.BindVAO();
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		

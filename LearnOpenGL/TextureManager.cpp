@@ -43,12 +43,12 @@ void TextureManager::SetTextureWrappingAndFiltering()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 }
 
-void TextureManager::LoadTexture(const char* path)
+void TextureManager::LoadTexture(const char* path, GLuint colorchannel)
 {
 	data = stbi_load(path, &width, &height, &nrChannels, 0);
 	if (data)
 	{
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+		glTexImage2D(GL_TEXTURE_2D, 0, colorchannel, width, height, 0, colorchannel, GL_UNSIGNED_BYTE, data);
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 	else
@@ -67,4 +67,15 @@ unsigned int TextureManager::getTextureId(unsigned int index)
 	else {
 		return textureId; // For single texture case
 	}
+}
+
+void TextureManager::ActivateTexture(unsigned int textureUnit, unsigned int index)
+{
+	glActiveTexture(GL_TEXTURE0 + textureUnit);
+	BindTexture(index);
+}
+
+void TextureManager::FlipTexture()
+{
+	stbi_set_flip_vertically_on_load(true);
 }
