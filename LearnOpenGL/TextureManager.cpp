@@ -32,15 +32,11 @@ void TextureManager::BindTexture(unsigned int index)
 	}
 }
 
-void TextureManager::SetTextureWrappingAndFiltering()
+void TextureManager::SetTextureWrappingAndFiltering(GLenum target, GLenum pname, GLint param)
 {
 	// set the texture wrapping/filtering options (on the currently bound texture object)
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(target, pname, param);
 
-	// set texture filtering parameters
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 }
 
 void TextureManager::LoadTexture(const char* path, GLuint colorchannel)
