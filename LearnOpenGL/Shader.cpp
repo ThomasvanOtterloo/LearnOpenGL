@@ -86,8 +86,12 @@ unsigned int Shader::GetShaderProgram()
 
 int Shader::GetUniformLocation(const char* uniformName)
 {
-	
 	return glGetUniformLocation(shaderProgram, uniformName);
+}
+
+void Shader::setFloat(const std::string& name, float value) const
+{
+	glUniform1f(glGetUniformLocation(shaderProgram, name.c_str()), value);
 }
 
 void Shader::CheckShaderCompilation(unsigned int shader)

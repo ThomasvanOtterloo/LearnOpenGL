@@ -28,11 +28,11 @@ int main()
 
 	
 	float vertices[] = {
-		// positions          // colors           // texture coords (note that we changed them to 'zoom in' on our texture image)
-		 0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   0.55f, 0.55f, // top right
-		 0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   0.55f, 0.45f, // bottom right
-		-0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.45f, 0.45f, // bottom left
-		-0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.45f, 0.55f  // top left 
+		// positions          // colors           // texture coords
+		 0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
+		 0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
+		-0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
+		-0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
 	};
 
 	
@@ -106,12 +106,12 @@ int main()
 	glUniform1i(glGetUniformLocation(shader.GetShaderProgram(), "texture1"), 0);
 	glUniform1i(glGetUniformLocation(shader.GetShaderProgram(), "texture2"), 1);
 
-
+	glUniform1i(glGetUniformLocation(shader.GetShaderProgram(), "zoomTexCoord"), 1);
 
 	// Main loop
 	while (!window.shouldClose()) {
 		inputHandler.processInput();
-
+		
 		renderer.render();
 
 		
@@ -126,6 +126,9 @@ int main()
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		
 
+		shader.setFloat("zoomTexCoord", inputHandler.getMixValue());
+
+		
 
 		window.swapBuffersAndPollEvents();
 	}

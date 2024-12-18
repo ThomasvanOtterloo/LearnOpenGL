@@ -21,6 +21,7 @@ public:
 	unsigned int GetShaderProgram();
 
 	int GetUniformLocation(const char* uniformName);
+	void setFloat(const std::string& name, float value) const;
 
 
 

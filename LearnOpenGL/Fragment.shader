@@ -7,11 +7,14 @@ in vec2 TexCoord;
 uniform sampler2D texture1;
 uniform sampler2D texture2;
 
+uniform float zoomTexCoord;
+
 void main()
 {
-    // Mirror the x-coordinate of TexCoord for the second texture
-    vec2 mirrorTexCoord = vec2(1.0 - TexCoord.x, TexCoord.y);
+    // Create a new variable for the adjusted texture coordinates
+    vec2 zoomedTexCoord = vec2(TexCoord.x, TexCoord.y * zoomTexCoord);
 
-    // Mix the two textures: first texture uses TexCoord, second uses mirrorTexCoord
-    FragColor = mix(texture(texture1, TexCoord), texture(texture2, mirrorTexCoord), 0.2);
+    // Use the new variable in the texture sampling
+    FragColor = mix(texture(texture1, TexCoord), texture(texture2, zoomedTexCoord), 0.2);
 }
+
