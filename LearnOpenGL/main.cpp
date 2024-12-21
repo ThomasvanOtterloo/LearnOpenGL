@@ -10,6 +10,10 @@
 #include "ElementBuffer.h"
 #include "TextureManager.h"
 
+#include <GLM/glm.hpp>
+#include <GLM/gtc/matrix_transform.hpp>
+#include <GLM/gtc/type_ptr.hpp>
+
 
 
 
@@ -25,14 +29,23 @@ int main()
 	Renderer renderer(window.getWindow());
 	InputHandler inputHandler(window.getWindow());
 
+	
+
+
+
+
+
+
+
+
 
 	
 	float vertices[] = {
 		// positions          // colors           // texture coords
-		 0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
-		 0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
+		 0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   2.0f, 2.0f, // top right
+		 0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   2.0f, 0.0f, // bottom right
 		-0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-		-0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
+		-0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 2.0f  // top left 
 	};
 
 	
@@ -108,6 +121,23 @@ int main()
 
 	glUniform1i(glGetUniformLocation(shader.GetShaderProgram(), "zoomTexCoord"), 1);
 
+
+	// transformations 
+	//glm::vec4 vec(1.0f, 0.0f, 0.0f, 1.0f); // vec4 because of homogenous coordinates
+	//glm::mat4 trans = glm::mat4(1.0f);
+	//trans = glm::translate(trans, glm::vec3(1.0f, 1.0f, 0.0f));
+	//vec = trans * vec;
+	//std::cout << vec.x << vec.y << vec.z << std::endl;
+
+	glm::mat4 trans = glm::mat4(1.0f); // creates a 4x4 identity
+	trans = glm::rotate(trans, glm::radians(90.0f), glm::vec3(0.0, 0.0, 1.0));
+	trans = glm::scale(trans, glm::vec3(0.5, 0.5, 0.5)); 
+
+	unsigned int transformLoc = glGetUniformLocation(shader.GetShaderProgram(), "transform");
+	glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
+
+
+
 	// Main loop
 	while (!window.shouldClose()) {
 		inputHandler.processInput();
@@ -127,6 +157,7 @@ int main()
 		
 
 		shader.setFloat("zoomTexCoord", inputHandler.getMixValue());
+
 
 		
 
