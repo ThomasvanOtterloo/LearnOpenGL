@@ -134,7 +134,7 @@ int main()
 	trans = glm::scale(trans, glm::vec3(0.5, 0.5, 0.5)); 
 
 	unsigned int transformLoc = glGetUniformLocation(shader.GetShaderProgram(), "transform");
-	glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
+	//glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
 
 
 
@@ -153,13 +153,15 @@ int main()
 
 		shader.UseShaderProgram();
 		vaoManager.BindVAO();
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-		
 
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		shader.setFloat("zoomTexCoord", inputHandler.getMixValue());
 
+		glm::mat4 trans = glm::mat4(1.0f); // creates a 4x4 identity
+		trans = glm::rotate(trans, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f)); // Rotates the object
+		trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f)); // Moves the object to the right and down
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
 
-		
 
 		window.swapBuffersAndPollEvents();
 	}
