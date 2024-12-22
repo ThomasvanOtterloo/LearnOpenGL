@@ -42,10 +42,10 @@ int main()
 	
 	float vertices[] = {
 		// positions          // colors           // texture coords
-		 0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   2.0f, 2.0f, // top right
-		 0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   2.0f, 0.0f, // bottom right
+		 0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
+		 0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
 		-0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-		-0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 2.0f  // top left 
+		-0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
 	};
 
 	
@@ -65,11 +65,10 @@ int main()
 	textureManager2.BindTexture();
 	textureManager2.FlipTexture();
 	textureManager2.LoadTexture("C:/Users/Thomas/Downloads/awesomeface.png", GL_RGBA);
-	textureManager2.SetTextureWrappingAndFiltering(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	textureManager2.SetTextureWrappingAndFiltering(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	textureManager2.SetTextureWrappingAndFiltering(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	textureManager2.SetTextureWrappingAndFiltering(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	textureManager2.SetTextureWrappingAndFiltering(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	textureManager2.SetTextureWrappingAndFiltering(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	
 	unsigned int texture2 = textureManager2.getTextureId();
 
 
@@ -118,8 +117,7 @@ int main()
 	// Set the texture uniform in the shader
 	glUniform1i(glGetUniformLocation(shader.GetShaderProgram(), "texture1"), 0);
 	glUniform1i(glGetUniformLocation(shader.GetShaderProgram(), "texture2"), 1);
-
-	glUniform1i(glGetUniformLocation(shader.GetShaderProgram(), "zoomTexCoord"), 1);
+	glUniform1i(glGetUniformLocation(shader.GetShaderProgram(), "zoomTexCoord"), 0);
 
 
 	// transformations 
@@ -141,12 +139,8 @@ int main()
 	// Main loop
 	while (!window.shouldClose()) {
 		inputHandler.processInput();
-		
 		renderer.render();
 
-		
-		
-		
 		// bind textures on corresponding texture units
 		textureManager.ActivateTexture(0);
 		textureManager2.ActivateTexture(1);
@@ -154,9 +148,8 @@ int main()
 		shader.UseShaderProgram();
 		vaoManager.BindVAO();
 
-		
-
-		shader.setFloat("zoomTexCoord", inputHandler.getMixValue());
+		//shader.setFloat("zoomTexCoord", inputHandler.getMixValue());
+		shader.setFloat("zoomTexCoord", 1);
 
 		// first transformation
 		glm::mat4 trans = glm::mat4(1.0f); // creates a 4x4 identity
@@ -165,23 +158,23 @@ int main()
 		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-		// second transformation
-		glm::mat4 trans2 = glm::mat4(1.0f); // creates
-		trans2 = glm::translate(trans2, glm::vec3(-0.5f, 0.5f, 0.0f)); // Moves the object to the left and up
-		float scaleAmount = sin(glfwGetTime());
-		trans2 = glm::scale(trans2, glm::vec3(scaleAmount, scaleAmount, scaleAmount)); // Scales the object
-		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans2));
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-
-		// third transformation
-		glm::mat4 trans3 = glm::mat4(1.0f); // creates
-		trans3 = glm::translate(trans3, glm::vec3(0.0f, 0.0f, 0.0f)); // Moves the object to the left and up
-		trans3 = glm::rotate(trans3, (float)glfwGetTime(), glm::vec3(1.0f, 0.0f, 1.0f)); // Rotates the object
-		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans3));
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 
+		glm::mat4 model = glm::mat4(1.0f);
+		model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
+		glm::mat4 view = glm::mat4(1.0f);
+		// note that we're translating the scene in the reverse direction of where we want to move
+		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+
+		glm::mat4 projection;
+		projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
+
+		glUniformMatrix4fv(glGetUniformLocation(shader.GetShaderProgram(), "model"), 1, GL_FALSE, glm::value_ptr(model));
+		glUniformMatrix4fv(glGetUniformLocation(shader.GetShaderProgram(), "view"), 1, GL_FALSE, glm::value_ptr(view));
+		glUniformMatrix4fv(glGetUniformLocation(shader.GetShaderProgram(), "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+
+		
 
 		window.swapBuffersAndPollEvents();
 	}
