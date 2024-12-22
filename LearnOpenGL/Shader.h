@@ -2,6 +2,9 @@
 
 #include <glad/glad.h> // include glad to get all the required OpenGL headers
 #include <string>
+#include <GLM/fwd.hpp>
+#include <GLM/gtc/type_ptr.hpp>
+
 class Shader
 {
 private:
@@ -22,6 +25,8 @@ public:
 
 	int GetUniformLocation(const char* uniformName);
 	void setFloat(const std::string& name, float value) const;
+	void setMat4(const std::string& name, const glm::mat4& mat) const;
+
 
 
 
