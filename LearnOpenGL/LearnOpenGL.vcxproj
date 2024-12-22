@@ -150,6 +150,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\..\..\..\Downloads\src\glad.c" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ElementBuffer.cpp" />
     <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="main.cpp" />
@@ -163,6 +164,7 @@
     <ClCompile Include="WindowManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="ElementBuffer.h" />
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="Renderer.h" />

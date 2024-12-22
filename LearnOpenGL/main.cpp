@@ -9,11 +9,11 @@
 #include "VAOManager.h"
 #include "ElementBuffer.h"
 #include "TextureManager.h"
+#include "Camera.h"
 
 #include <GLM/glm.hpp>
 #include <GLM/gtc/matrix_transform.hpp>
 #include <GLM/gtc/type_ptr.hpp>
-
 
 
 
@@ -148,12 +148,28 @@ int main()
 	unsigned int transformLoc = glGetUniformLocation(shader.GetShaderProgram(), "transform");
 	//glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
 
+	/*Camera camera;
+	camera.SetCameraPosition(glm::vec3(0.0f, 0.0f, 3.0f));
+	camera.SetCameraDirection(glm::vec3(0.0f, 0.0f, 0.0f));
+	camera.SetCameraAxis(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0));*/
 
 
 	// Main loop
 	while (!window.shouldClose()) {
 		inputHandler.processInput();
 		renderer.render();
+
+		const float radius = 10.0f;
+		float camX = sin(glfwGetTime()) * radius;
+		float camZ = cos(glfwGetTime()) * radius;
+		glm::mat4 view;
+		view = glm::lookAt(glm::vec3(camX, 0.0, camZ), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
+
+
+		//glm::mat4 view = glm::mat4(1.0f);
+		//// note that we're translating the scene in the reverse direction of where we want to move
+		//view = glm::translate(view, glm::vec3(0.0f, 0.0f, -6.0f));
+
 
 		// bind textures on corresponding texture units
 		textureManager.ActivateTexture(0);
@@ -184,10 +200,7 @@ int main()
 		glm::mat4 model = glm::mat4(1.0f);
 		model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 2.0f));
 
-		glm::mat4 view = glm::mat4(1.0f);
-		// note that we're translating the scene in the reverse direction of where we want to move
-		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -6.0f));
-
+		
 		glm::mat4 projection;
 		projection = glm::perspective(glm::radians(55.0f), 600.0f / 600.0f, 0.1f, 1000.0f);
 
