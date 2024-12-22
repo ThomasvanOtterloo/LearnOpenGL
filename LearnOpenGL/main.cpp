@@ -151,7 +151,7 @@ int main()
 	Camera camera;
 	camera.SetCameraPosition(glm::vec3(0.0f, 0.0f, 3.0f)); // Initial position
 	camera.SetCameraAxis(glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-	camera.SetCameraDirection(glm::vec3(0.0f, 0.0f, 0.0f)); // Look at the origin
+	//camera.SetCameraDirection(glm::vec3(0.0f, 0.0f, 0.0f)); // Look at the origin
 	
 
 
@@ -203,7 +203,7 @@ int main()
 		
 		
 		glm::mat4 projection;
-		projection = glm::perspective(glm::radians(55.0f), 600.0f / 600.0f, 0.1f, 1000.0f);
+		projection = glm::perspective(glm::radians(55.0f), 600.0f / 600.0f, 0.1f, 50.0f);
 		shader.setMat4("projection", projection);
 
 		//glUniformMatrix4fv(glGetUniformLocation(shader.GetShaderProgram(), "model"), 1, GL_FALSE, glm::value_ptr(model));

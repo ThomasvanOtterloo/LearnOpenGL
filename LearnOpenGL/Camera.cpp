@@ -10,7 +10,7 @@ Camera::Camera()
 	cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);          // Default up direction
 
 	cameraRight = glm::normalize(glm::cross(cameraFront, cameraUp)); // Right vector
-	cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);      // Target position (default origin)
+	//cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);      // Target position (default origin)
 }
 
 Camera::~Camera()
@@ -43,7 +43,7 @@ void Camera::SetCameraSpeed()
 	float currentFrame = glfwGetTime();
 	deltaTime = currentFrame - lastFrame;
 	lastFrame = currentFrame;
-	cameraSpeed = 2.5f * deltaTime;
+	cameraSpeed = 5.5f * deltaTime;
 }
 
 glm::mat4 Camera::lookAt() {
@@ -68,6 +68,10 @@ void Camera::ProcessUserInput(MovementDirection direction) {
 		cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
 	if (direction == RIGHT)
 		cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+	if (direction == UP)
+		cameraPos += cameraSpeed * cameraUp;
+	if (direction == DOWN)
+		cameraPos -= cameraSpeed * cameraUp;
 
 	// Recalculate cameraFront dynamically
 	cameraDirection = glm::normalize(cameraPos - cameraTarget);

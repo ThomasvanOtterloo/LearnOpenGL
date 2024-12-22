@@ -25,6 +25,10 @@ void InputHandler::processCameraInput(Camera& camera)
 		camera.ProcessUserInput(LEFT);
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		camera.ProcessUserInput(RIGHT);
+	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
+		camera.ProcessUserInput(UP);
+	if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+		camera.ProcessUserInput(DOWN);
 }
 
 
