@@ -27,7 +27,9 @@ int main()
 		return -1;
 	}
 	Renderer renderer(window.getWindow());
-	InputHandler inputHandler(window.getWindow());
+	Camera camera;
+	InputHandler inputHandler(window.getWindow(), camera);
+	
 
 	float vertices[] = {
 		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
@@ -148,18 +150,23 @@ int main()
 	unsigned int transformLoc = glGetUniformLocation(shader.GetShaderProgram(), "transform");
 	//glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
 
-	Camera camera;
-	camera.SetCameraPosition(glm::vec3(0.0f, 0.0f, 3.0f)); // Initial position
-	camera.SetCameraAxis(glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-	//camera.SetCameraDirection(glm::vec3(0.0f, 0.0f, 0.0f)); // Look at the origin
 	
-
-
+	
+	
+	float deltaTime = 0.0f;  // time between current frame and last frame
+	float lastFrame = 0.0f;  // time of last frame
 	// Main loop
 	while (!window.shouldClose()) {
-		camera.SetCameraSpeed();
 		inputHandler.processInput();
-		inputHandler.processCameraInput(camera);
+
+		float currentFrame = glfwGetTime();
+		deltaTime = currentFrame - lastFrame;
+		lastFrame = currentFrame;
+
+
+		inputHandler.processCameraInput(deltaTime);
+
+
 		renderer.render();
 
 		
@@ -193,7 +200,7 @@ int main()
 		//shader.setFloat("zoomTexCoord", inputHandler.getMixValue());
 		shader.setFloat("zoomTexCoord", 1);
 
-		glm::mat4 view = camera.lookAt();
+		glm::mat4 view = camera.GetViewMatrix();
 		shader.setMat4("view", view);
 
 	/*	glm::mat4 model = glm::mat4(1.0f);

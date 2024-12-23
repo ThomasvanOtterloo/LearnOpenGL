@@ -6,7 +6,6 @@ bool WindowManager::init(int width, int height, const char* title) {
         std::cerr << "Failed to initialize GLFW" << std::endl;
         return false;
     }
-
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -27,6 +26,10 @@ bool WindowManager::init(int width, int height, const char* title) {
 
     glViewport(0, 0, width, height);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    
+
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
     return true;
 }
 

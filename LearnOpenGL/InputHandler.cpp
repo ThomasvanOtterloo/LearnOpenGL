@@ -6,29 +6,66 @@
 
 
 
-InputHandler::InputHandler(GLFWwindow* window) : window(window) {}
+InputHandler::InputHandler(GLFWwindow* window, Camera& cam) : window(window), camera(cam) {}
 
 void InputHandler::processInput() {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
 
+    glfwSetWindowUserPointer(window, this);
+    glfwSetCursorPosCallback(window, InputHandler::mouse_callback);
 }
 
-void InputHandler::processCameraInput(Camera& camera)
+void InputHandler::processCameraInput(float deltaTime)
 {
-	camera = camera;
-	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-		camera.ProcessUserInput(FORWARD);
-	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		camera.ProcessUserInput(BACKWARD);
-	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-		camera.ProcessUserInput(LEFT);
-	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-		camera.ProcessUserInput(RIGHT);
-	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
-		camera.ProcessUserInput(UP);
-	if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
-		camera.ProcessUserInput(DOWN);
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+        camera.ProcessKeyboard(FORWARD, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+        camera.ProcessKeyboard(BACKWARD, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+        camera.ProcessKeyboard(LEFT, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+        camera.ProcessKeyboard(RIGHT, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
+        camera.ProcessKeyboard(UP, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+        camera.ProcessKeyboard(DOWN, deltaTime);
 }
+
+
+// This static function is what GLFW will call whenever the mouse moves.
+// It just forwards the call to the actual member function.
+void InputHandler::mouse_callback(GLFWwindow* window, double xpos, double ypos)
+{
+    // Retrieve the 'this' pointer we stored in the constructor
+    InputHandler* handler = static_cast<InputHandler*>(glfwGetWindowUserPointer(window));
+    if (handler)
+    {
+        handler->handleMouseMovement(xpos, ypos);
+    }
+}
+
+
+void InputHandler::handleMouseMovement(double xpos, double ypos)
+{
+    auto* inputHandler = static_cast<InputHandler*>(glfwGetWindowUserPointer(window));
+    if (!inputHandler) return; // Safety check
+	std::cout << "Mouse moved to (" << xpos << ", " << ypos << ")" << std::endl;
+    if (firstMouse)
+    {
+        lastX = xpos;
+        lastY = ypos;
+        firstMouse = false;
+    }
+    float xoffset = xpos - lastX;
+    float yoffset = lastY - ypos;
+    lastX = xpos;
+    lastY = ypos;
+
+    camera.ProcessMouseMovement(xoffset, yoffset);
+}
+
+    
+
 
 
