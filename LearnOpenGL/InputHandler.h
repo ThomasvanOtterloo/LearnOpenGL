@@ -16,6 +16,7 @@ private:
 	float pitch = 0.0f;
 
 	static void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+	static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
 public:
 	InputHandler(GLFWwindow* window, Camera& camera);
@@ -23,5 +24,7 @@ public:
 	void processCameraInput(float deltaTime);
 	float getMixValue() { return mixValue; }
 	void handleMouseMovement(double xpos, double ypos);
+	void handleMouseScroll(double xoffset, double yoffset);
+
 
 };

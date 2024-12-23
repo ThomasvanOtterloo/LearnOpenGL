@@ -208,9 +208,9 @@ int main()
 		shader.setMat4("model", model);*/
 
 		
-		
+		float fov = camera.Zoom;
 		glm::mat4 projection;
-		projection = glm::perspective(glm::radians(55.0f), 600.0f / 600.0f, 0.1f, 50.0f);
+		projection = glm::perspective(glm::radians(fov), 600.0f / 600.0f, 0.1f, 50.0f);
 		shader.setMat4("projection", projection);
 
 		//glUniformMatrix4fv(glGetUniformLocation(shader.GetShaderProgram(), "model"), 1, GL_FALSE, glm::value_ptr(model));

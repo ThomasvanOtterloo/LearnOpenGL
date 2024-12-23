@@ -72,6 +72,8 @@ public:
     // processes input received from a mouse scroll-wheel event
     void ProcessMouseScroll(float yoffset);
 
+
+
 private:
     // calculates the front vector from the Camera's (updated) Euler Angles
     void updateCameraVectors();

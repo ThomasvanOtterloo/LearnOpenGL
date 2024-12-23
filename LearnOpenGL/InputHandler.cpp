@@ -14,6 +14,9 @@ void InputHandler::processInput() {
 
     glfwSetWindowUserPointer(window, this);
     glfwSetCursorPosCallback(window, InputHandler::mouse_callback);
+    // In your InputHandler.cpp or wherever you initialize GLFW callbacks
+    glfwSetScrollCallback(window, InputHandler::scroll_callback);
+
 }
 
 void InputHandler::processCameraInput(float deltaTime)
@@ -65,7 +68,25 @@ void InputHandler::handleMouseMovement(double xpos, double ypos)
     camera.ProcessMouseMovement(xoffset, yoffset);
 }
 
-    
+
+
+// InputHandler.cpp
+void InputHandler::scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+{
+    // Retrieve the 'this' pointer from window user pointer
+    InputHandler* handler = static_cast<InputHandler*>(glfwGetWindowUserPointer(window));
+    if (handler)
+    {
+        handler->handleMouseScroll(xoffset, yoffset);
+    }
+}
+
+void InputHandler::handleMouseScroll(double xoffset, double yoffset)
+{
+    // If you have a reference/pointer to your main camera:
+    camera.ProcessMouseScroll((float)yoffset);
+    // xoffset is usually horizontal scrolling, which is typically ignored for zoom.
+}
 
 
 
