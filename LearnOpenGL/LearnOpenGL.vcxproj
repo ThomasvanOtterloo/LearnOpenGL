@@ -178,8 +178,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Fragment.shader" />
-    <None Include="Fragment2.shader" />
+    <None Include="FragmentLightSource.shader" />
     <None Include="Vertex.shader" />
+    <None Include="VertexLightSource.shader" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\..\..\..\..\Downloads\container.jpg" />

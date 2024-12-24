@@ -53,6 +53,8 @@ void Camera::ProcessKeyboard(Camera_Movement direction, float deltaTime)
         Position += Up * velocity;
     if (direction == DOWN)
         Position -= Up * velocity;
+
+	//Position.y = 0.0f; // Keep the camera at the ground level
 }
 
 void Camera::ProcessMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch)

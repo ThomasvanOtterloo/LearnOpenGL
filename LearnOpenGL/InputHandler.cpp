@@ -53,7 +53,6 @@ void InputHandler::handleMouseMovement(double xpos, double ypos)
 {
     auto* inputHandler = static_cast<InputHandler*>(glfwGetWindowUserPointer(window));
     if (!inputHandler) return; // Safety check
-	std::cout << "Mouse moved to (" << xpos << ", " << ypos << ")" << std::endl;
     if (firstMouse)
     {
         lastX = xpos;
