@@ -80,8 +80,8 @@ int main()
 
 
 	glm::vec3 cubePositions[] = {
-	glm::vec3(0.0f,  0.0f,  0.0f),
-	glm::vec3(2.0f,  5.0f, -15.0f),
+	glm::vec3(0.0f,  -1.0f,  0.0f),
+	glm::vec3(1.0f,  1.0f, -3.0f),
 	};
 
 
@@ -137,11 +137,14 @@ int main()
 
 		// start rendering
 		renderer.render();
+
+		glm::vec3 objectColor = glm::vec3(1.0f, 0.5f, 0.31f);
+		glm::vec3 lightColor = glm::vec3(1.0f, 1.0f, 1.0f);
 		
 
 		shader.UseShaderProgram();
-		shader.setVec3("objectColor", glm::vec3(1.0, 0.5, 0.31));
-		shader.setVec3("lightColor", glm::vec3(1.0, 1.0, 1.0));
+		shader.setVec3("objectColor", objectColor);
+		shader.setVec3("lightColor", lightColor);
 
 		// view/projection transformations
 		
@@ -164,7 +167,6 @@ int main()
 
 
 		// render the second cube
-
 		// copy the projection and view from the first cube so the second cube is in the same view
 		lightSourceShader.UseShaderProgram();
 		lightSourceShader.setMat4("projection", projection);
@@ -172,15 +174,14 @@ int main()
 
 
 		model = glm::translate(model, cubePositions[1]);
-		model = glm::scale(model, glm::vec3(0.2f));
+		model = glm::scale(model, glm::vec3(0.5f));
 		lightSourceShader.setMat4("model", model);
-
+		
 		vaoManager2.BindVAO();
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
 
-		// camera stuff
-		
+	
 		
 
 		window.swapBuffersAndPollEvents();
