@@ -180,11 +180,17 @@ int main()
 		lightSourceShader.setMat4("projection", projection);
 		lightSourceShader.setMat4("view", view);
 
-
 		glm::mat4 lampModel = glm::mat4(1.0f);
 		lampModel = glm::translate(lampModel, cubePositions[1]);
+		lampModel = glm::rotate(lampModel, (float)glfwGetTime(), glm::vec3(1.0f, 0.3f, 0.5f));
+
+		// translates the light source
+		cubePositions[1].x = 1.0f + sin(glfwGetTime()) * 4.0f;
+		cubePositions[1].y = sin(glfwGetTime() / 2.0f) * 4.0f;
+
 		lampModel = glm::scale(lampModel, glm::vec3(0.15f));
 		lightSourceShader.setMat4("model", lampModel);
+
 		
 		vaoManager2.BindVAO();
 		glDrawArrays(GL_TRIANGLES, 0, 36);
