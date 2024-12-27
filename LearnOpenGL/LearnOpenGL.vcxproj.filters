@@ -100,16 +100,16 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Vertex.shader">
+    <None Include="Vertex.vert">
       <Filter>res\shaders</Filter>
     </None>
-    <None Include="Fragment.shader">
+    <None Include="Fragment.frag">
       <Filter>res\shaders</Filter>
     </None>
-    <None Include="FragmentLightSource.shader">
+    <None Include="FragmentLightSource.frag">
       <Filter>res\shaders</Filter>
     </None>
-    <None Include="VertexLightSource.shader">
+    <None Include="VertexLightSource.vert">
       <Filter>res\shaders</Filter>
     </None>
   </ItemGroup>

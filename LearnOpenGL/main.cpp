@@ -36,6 +36,7 @@ int main()
 
 
 	float vertices[] = {
+		// positions          // normals
 		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
 		 0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
 		 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
@@ -118,13 +119,13 @@ int main()
 	Shader shader;
 	Shader lightSourceShader;
 
-	GLint vertexShader = shader.CreateVertexShader("C:/Users/Thomas/Desktop/school/SelfStudy/OpenGL/Projects/LearnOpenGL/LearnOpenGL/Vertex.shader");
-	GLint fragmentShader = shader.CreateFragmentShader("C:/Users/Thomas/Desktop/school/SelfStudy/OpenGL/Projects/LearnOpenGL/LearnOpenGL/Fragment.shader");
+	GLint vertexShader = shader.CreateVertexShader("C:/Users/Thomas/Desktop/school/SelfStudy/OpenGL/Projects/LearnOpenGL/LearnOpenGL/Vertex.vert");
+	GLint fragmentShader = shader.CreateFragmentShader("C:/Users/Thomas/Desktop/school/SelfStudy/OpenGL/Projects/LearnOpenGL/LearnOpenGL/Fragment.frag");
 	shader.CreateShaderProgram(vertexShader, fragmentShader);
 	shader.UseShaderProgram();
 
-	GLint lightVertexShader = lightSourceShader.CreateVertexShader("C:/Users/Thomas/Desktop/school/SelfStudy/OpenGL/Projects/LearnOpenGL/LearnOpenGL/VertexLightSource.shader");
-	GLint lightFragmentShader = lightSourceShader.CreateFragmentShader("C:/Users/Thomas/Desktop/school/SelfStudy/OpenGL/Projects/LearnOpenGL/LearnOpenGL/FragmentLightSource.shader");
+	GLint lightVertexShader = lightSourceShader.CreateVertexShader("C:/Users/Thomas/Desktop/school/SelfStudy/OpenGL/Projects/LearnOpenGL/LearnOpenGL/VertexLightSource.vert");
+	GLint lightFragmentShader = lightSourceShader.CreateFragmentShader("C:/Users/Thomas/Desktop/school/SelfStudy/OpenGL/Projects/LearnOpenGL/LearnOpenGL/FragmentLightSource.frag");
 	lightSourceShader.CreateShaderProgram(lightVertexShader, lightFragmentShader);
 	lightSourceShader.UseShaderProgram();
 
@@ -144,8 +145,10 @@ int main()
 		renderer.render();
 
 		glm::vec3 objectColor = glm::vec3(1.0f, 0.5f, 0.31f);
+
 		glm::vec3 lightColor = glm::vec3(1.0f, 1.0f, 1.0f);
-		//glm::vec3 lightPos = glm::vec3(1.2f, 1.0f, 2.0f);
+
+		
 		
 
 		shader.UseShaderProgram();

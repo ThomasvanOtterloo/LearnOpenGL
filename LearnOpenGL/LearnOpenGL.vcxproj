@@ -177,10 +177,10 @@
     <ClInclude Include="WindowManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Fragment.shader" />
-    <None Include="FragmentLightSource.shader" />
-    <None Include="Vertex.shader" />
-    <None Include="VertexLightSource.shader" />
+    <None Include="Fragment.frag" />
+    <None Include="FragmentLightSource.frag" />
+    <None Include="Vertex.vert" />
+    <None Include="VertexLightSource.vert" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\..\..\..\..\Downloads\container.jpg" />
