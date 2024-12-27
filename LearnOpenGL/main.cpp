@@ -144,18 +144,28 @@ int main()
 		// start rendering
 		renderer.render();
 
-		glm::vec3 objectColor = glm::vec3(1.0f, 0.5f, 0.31f);
-
-		glm::vec3 lightColor = glm::vec3(1.0f, 1.0f, 1.0f);
-
-		
 		
 
 		shader.UseShaderProgram();
-		shader.setVec3("objectColor", objectColor);
-		shader.setVec3("lightColor", lightColor);
 		shader.setVec3("lightPos", cubePositions[1]);
 		shader.setVec3("viewPos", camera.Position);
+
+		shader.setVec3("material.ambient", 1.0f, 0.5f, 0.31f);
+		shader.setVec3("material.diffuse", 1.0f, 0.5f, 0.31f);
+		shader.setVec3("material.specular", 0.5f, 0.5f, 0.5f);
+		shader.setFloat("material.shininess", 32.0f);
+
+		glm::vec3 lightColor2;
+		lightColor2.x = sin(glfwGetTime() * 2.0f);
+		lightColor2.y = sin(glfwGetTime() * 0.7f);
+		lightColor2.z = sin(glfwGetTime() * 1.3f);
+
+		glm::vec3 diffuseColor = lightColor2 * glm::vec3(0.5f); // decrease the influence
+		glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f); // low influence
+
+		shader.setVec3("light.ambient", ambientColor);
+		shader.setVec3("light.diffuse", diffuseColor); // darken diffuse light a bit
+		shader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
 
 		// view/projection transformations
 		
@@ -188,8 +198,8 @@ int main()
 		lampModel = glm::rotate(lampModel, (float)glfwGetTime(), glm::vec3(1.0f, 0.3f, 0.5f));
 
 		// translates the light source
-		cubePositions[1].x = 1.0f + sin(glfwGetTime()) * 4.0f;
-		cubePositions[1].y = sin(glfwGetTime() / 2.0f) * 4.0f;
+	/*	cubePositions[1].x = 1.0f + sin(glfwGetTime()) * 4.0f;
+		cubePositions[1].y = sin(glfwGetTime() / 2.0f) * 4.0f;*/
 
 		lampModel = glm::scale(lampModel, glm::vec3(0.15f));
 		lightSourceShader.setMat4("model", lampModel);
