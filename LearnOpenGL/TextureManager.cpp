@@ -67,9 +67,16 @@ unsigned int TextureManager::getTextureId(unsigned int index)
 
 void TextureManager::ActivateTexture(unsigned int textureUnit, unsigned int index)
 {
-	glActiveTexture(GL_TEXTURE0 + textureUnit);
-	BindTexture(index);
+	glActiveTexture(GL_TEXTURE0 + textureUnit); // Activate texture unit
+
+	if (texturesId) {
+		glBindTexture(GL_TEXTURE_2D, texturesId[index]); // Bind indexed texture
+	}
+	else {
+		glBindTexture(GL_TEXTURE_2D, textureId); // Bind single texture
+	}
 }
+
 
 void TextureManager::FlipTexture()
 {
