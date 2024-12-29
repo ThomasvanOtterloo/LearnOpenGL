@@ -103,13 +103,25 @@ int main()
 	// create texture manager and load texture
 	TextureManager textureManager(1);
 	textureManager.FlipTexture();
-	textureManager.LoadTexture("C:/Users/Thomas/Downloads/container2.png", GL_RGBA);
+	textureManager.BindTexture();
+	textureManager.LoadTexture("C:/Users/Thomas/Downloads/container2.png");
 	textureManager.SetTextureWrappingAndFiltering(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	textureManager.SetTextureWrappingAndFiltering(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	textureManager.SetTextureWrappingAndFiltering(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	textureManager.SetTextureWrappingAndFiltering(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	textureManager.ActivateTexture(0);
+
+	TextureManager textureSpecular(1);
+	textureSpecular.FlipTexture();
+	textureSpecular.BindTexture();
+	textureSpecular.LoadTexture("C:/Users/Thomas/Downloads/container2_specular.png");
+	textureSpecular.SetTextureWrappingAndFiltering(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	textureSpecular.SetTextureWrappingAndFiltering(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	textureSpecular.SetTextureWrappingAndFiltering(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	textureSpecular.SetTextureWrappingAndFiltering(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	textureSpecular.ActivateTexture(1);
 
 
 
@@ -135,7 +147,8 @@ int main()
 	GLint fragmentShader = shader.CreateFragmentShader("C:/Users/Thomas/Desktop/school/SelfStudy/OpenGL/Projects/LearnOpenGL/LearnOpenGL/Fragment.frag");
 	shader.CreateShaderProgram(vertexShader, fragmentShader);
 	shader.UseShaderProgram();
-	shader.setInt("material.diffuse", textureManager.getTextureId());
+	shader.setInt("material.diffuse", 0); // -1 which becomes 0
+	shader.setInt("material.specular", 1); // -1 which becomes 1
 
 
 	GLint lightVertexShader = lightSourceShader.CreateVertexShader("C:/Users/Thomas/Desktop/school/SelfStudy/OpenGL/Projects/LearnOpenGL/LearnOpenGL/VertexLightSource.vert");
@@ -163,21 +176,14 @@ int main()
 		shader.UseShaderProgram();
 		shader.setVec3("light.position", cubePositions[1]);
 		shader.setVec3("viewPos", camera.Position);
-		
-		shader.setVec3("material.specular", 0.5f, 0.5f, 0.5f);
-		shader.setFloat("material.shininess", 64.0f);
 
 		// set the light properties
 		shader.setVec3("light.ambient", 0.2f, 0.2f, 0.2f);
 		shader.setVec3("light.diffuse", 0.5f, 0.5f, 0.5f); // darken the light a bit to fit the scene
 		shader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
 
-		textureManager.ActivateTexture(0);
-
-
-		
-
-		// view/projection transformations
+		// set the material properties
+		shader.setFloat("material.shininess", 128.0f);
 		
 		// projection matrix
 		glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), 1200.0f / 800.0f, 0.1f, 50.0f);
@@ -191,6 +197,9 @@ int main()
 		glm::mat4 model = glm::mat4(1.0f);
 		model = glm::translate(model, cubePositions[0]);
 		shader.setMat4("model", model);
+
+		textureManager.ActivateTexture(0);
+		textureSpecular.ActivateTexture(1);
 
 		// render the cube
 		vaoManager.BindVAO();
@@ -208,21 +217,12 @@ int main()
 		lampModel = glm::rotate(lampModel, (float)glfwGetTime(), glm::vec3(1.0f, 0.3f, 0.5f));
 
 
-
-		// translates the light source
-	/*	cubePositions[1].x = 1.0f + sin(glfwGetTime()) * 4.0f;
-		cubePositions[1].y = sin(glfwGetTime() / 2.0f) * 4.0f;*/
-
 		lampModel = glm::scale(lampModel, glm::vec3(0.15f));
 		lightSourceShader.setMat4("model", lampModel);
 
 		
 		vaoManager2.BindVAO();
 		glDrawArrays(GL_TRIANGLES, 0, 36);
-
-
-	
-		
 
 		window.swapBuffersAndPollEvents();
 	}

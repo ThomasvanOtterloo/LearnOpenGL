@@ -15,7 +15,7 @@ public:
 	~TextureManager();
 	void BindTexture(unsigned int index = 0);
 	void SetTextureWrappingAndFiltering(GLenum target, GLenum pname, GLint param);
-	void LoadTexture(const char* path, GLuint colorchannel);
+	void LoadTexture(const char* path);
 	unsigned int getTextureId(unsigned int index = 0);
 	void ActivateTexture(unsigned int textureUnit, unsigned int index = 0);
 	void FlipTexture();
