@@ -178,12 +178,12 @@ int main()
 		shader.setVec3("viewPos", camera.Position);
 
 		// set the light properties
-		shader.setVec3("light.ambient", 0.2f, 0.2f, 0.2f);
-		shader.setVec3("light.diffuse", 0.5f, 0.5f, 0.5f); // darken the light a bit to fit the scene
-		shader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
+		shader.setVec3("light.ambient", 0.2f, 0.2f, 0.2f); // shows how much light is in the scene
+		shader.setVec3("light.diffuse", 0.7f, 0.7f, 0.7f); // shows the amount of light of shadows
+		shader.setVec3("light.specular", 1.0f, 1.0f, 1.0f); // shows how shiny the light is
 
 		// set the material properties
-		shader.setFloat("material.shininess", 128.0f);
+		shader.setFloat("material.shininess", 32.0f);
 		
 		// projection matrix
 		glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), 1200.0f / 800.0f, 0.1f, 50.0f);

@@ -85,7 +85,7 @@ void TextureManager::ActivateTexture(unsigned int textureUnit, unsigned int inde
 	else {
 		glBindTexture(GL_TEXTURE_2D, textureId); // Bind single texture
 	}
-}
+} 
 
 
 void TextureManager::FlipTexture()
