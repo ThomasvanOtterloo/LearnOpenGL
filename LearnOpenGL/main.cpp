@@ -105,8 +105,8 @@ int main()
 	textureManager.FlipTexture();
 	textureManager.BindTexture();
 	textureManager.LoadTexture("C:/Users/Thomas/Downloads/container2.png");
-	textureManager.SetTextureWrappingAndFiltering(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	textureManager.SetTextureWrappingAndFiltering(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	textureManager.SetTextureWrappingAndFiltering(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	textureManager.SetTextureWrappingAndFiltering(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	textureManager.SetTextureWrappingAndFiltering(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	textureManager.SetTextureWrappingAndFiltering(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
@@ -116,12 +116,23 @@ int main()
 	textureSpecular.FlipTexture();
 	textureSpecular.BindTexture();
 	textureSpecular.LoadTexture("C:/Users/Thomas/Downloads/container2_specular.png");
-	textureSpecular.SetTextureWrappingAndFiltering(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	textureSpecular.SetTextureWrappingAndFiltering(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	textureSpecular.SetTextureWrappingAndFiltering(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	textureSpecular.SetTextureWrappingAndFiltering(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	textureSpecular.SetTextureWrappingAndFiltering(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	textureSpecular.SetTextureWrappingAndFiltering(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	textureSpecular.ActivateTexture(1);
+
+	TextureManager textureEmission(1);
+	textureEmission.FlipTexture();
+	textureEmission.BindTexture();
+	textureEmission.LoadTexture("C:/Users/Thomas/Downloads/matrix.jpg");
+	textureEmission.SetTextureWrappingAndFiltering(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	textureEmission.SetTextureWrappingAndFiltering(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	textureEmission.SetTextureWrappingAndFiltering(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	textureEmission.SetTextureWrappingAndFiltering(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	textureEmission.ActivateTexture(2);
 
 
 
@@ -149,6 +160,7 @@ int main()
 	shader.UseShaderProgram();
 	shader.setInt("material.diffuse", 0); // -1 which becomes 0
 	shader.setInt("material.specular", 1); // -1 which becomes 1
+	shader.setInt("material.emission", 2); // -1 which becomes 2
 
 
 	GLint lightVertexShader = lightSourceShader.CreateVertexShader("C:/Users/Thomas/Desktop/school/SelfStudy/OpenGL/Projects/LearnOpenGL/LearnOpenGL/VertexLightSource.vert");
@@ -200,6 +212,7 @@ int main()
 
 		textureManager.ActivateTexture(0);
 		textureSpecular.ActivateTexture(1);
+		textureEmission.ActivateTexture(2);
 
 		// render the cube
 		vaoManager.BindVAO();
