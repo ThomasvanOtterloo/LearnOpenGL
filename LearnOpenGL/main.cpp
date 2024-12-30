@@ -195,8 +195,12 @@ int main()
 		
 
 		shader.UseShaderProgram();
-		shader.setVec3("light.position",cubePositions[1]);
+		shader.setVec3("light.position", camera.Position);
 		shader.setVec3("viewPos", camera.Position);
+		shader.setVec3("light.direction", camera.Front);
+		shader.setFloat("light.cutOff", glm::cos(glm::radians(12.5f)));
+		shader.setFloat("light.outerCutOff", glm::cos(glm::radians(17.5f)));
+
 
 		// set the light properties
 		shader.setVec3("light.ambient", 0.05f, 0.05f, 0.05f); // shows how much light is in the scene
