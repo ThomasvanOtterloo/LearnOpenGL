@@ -83,7 +83,7 @@ int main()
 
 	glm::vec3 cubePositions[] = {
 		glm::vec3(0.0f,  -1.0f,  0.0f),
-		glm::vec3(1.0f,  1.0f, -3.0f),
+		glm::vec3(1.0f,  5.0f, -5.0f),
 		glm::vec3(-1.5f, -2.2f, -2.5f),
 		glm::vec3(-3.8f, -2.0f, -12.3f),
 		glm::vec3(2.4f, -0.4f, -3.5f),
@@ -195,14 +195,17 @@ int main()
 		
 
 		shader.UseShaderProgram();
-		shader.setVec3("light.direction", -0.8f, -1.0f, -0.3f);
+		shader.setVec3("light.position",cubePositions[1]);
 		shader.setVec3("viewPos", camera.Position);
 
 		// set the light properties
 		shader.setVec3("light.ambient", 0.05f, 0.05f, 0.05f); // shows how much light is in the scene
-		shader.setVec3("light.diffuse", 0.2f, 0.2f, 0.2f); // shows the amount of light of shadows
+		shader.setVec3("light.diffuse", 0.5f, 0.5f, 0.5f); // shows the amount of light of shadows
 		shader.setVec3("light.specular", 1.0f, 1.0f, 1.0f); // shows how shiny the light is
-		shader.setVec3("light.direction", -0.2f, -1.0f, -0.3f); // direction of the light
+
+		shader.setFloat("light.constant", 1.0f);
+		shader.setFloat("light.linear", 0.09f);
+		shader.setFloat("light.quadratic", 0.032f);
 
 		// set the material properties
 		shader.setFloat("material.shininess", 32.0f);
@@ -228,20 +231,25 @@ int main()
 		vaoManager.BindVAO();
 		for (unsigned int i = 0; i < 10; i++)
 		{
-			glm::mat4 model = glm::mat4(1.0f);
-			model = glm::translate(model, cubePositions[i]);
-			float angle = 20.0f * i;
-			model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-			shader.setMat4("model", model);
+			if (i != 1)
+			{
 
-			glDrawArrays(GL_TRIANGLES, 0, 36);
+
+				glm::mat4 model = glm::mat4(1.0f);
+				model = glm::translate(model, cubePositions[i]);
+				float angle = 20.0f * i;
+				model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+				shader.setMat4("model", model);
+
+				glDrawArrays(GL_TRIANGLES, 0, 36);
+			}
 		}
 		
 
 
 		// render the second cube
 		// copy the projection and view from the first cube so the second cube is in the same view
-		/*lightSourceShader.UseShaderProgram();
+		lightSourceShader.UseShaderProgram();
 		lightSourceShader.setMat4("projection", projection);
 		lightSourceShader.setMat4("view", view);
 
@@ -254,7 +262,7 @@ int main()
 		lightSourceShader.setMat4("model", lampModel);
 
 		vaoManager2.BindVAO();
-		glDrawArrays(GL_TRIANGLES, 0, 36);*/
+		glDrawArrays(GL_TRIANGLES, 0, 36);
 
 		window.swapBuffersAndPollEvents();
 	}
