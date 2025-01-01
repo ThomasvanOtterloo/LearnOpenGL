@@ -1,140 +1,145 @@
-#include "Shader.h"
-#include "ShaderLoader.h"
-#include <iostream>
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <string>
-
-
-Shader::Shader()
-{
-}
-
-Shader::~Shader()
-{
-}
-
-GLuint Shader::CreateVertexShader(std::string path)
-{
-	vertexShader = glCreateShader(GL_VERTEX_SHADER);
-
-	// Retrieve the shader source code from the file
-	ShaderLoader shaderLoader;
-	const GLchar* shaderSource = shaderLoader.LoadShader(path);
-	
-	// Attach the shader source code to the shader object
-	glShaderSource(vertexShader, 1, &shaderSource, NULL);
-	delete[] shaderSource; // Don't forget to free the memory after use
-
-	// Compile the shader
-	glCompileShader(vertexShader);
-
-	// check for shader compilation errors
-	CheckShaderCompilation(vertexShader);
-
-	return vertexShader;
-}
-
-GLuint Shader::CreateFragmentShader(std::string path)
-{
-	fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-
-	// Retrieve the shader source code from the file
-	ShaderLoader shaderLoader;
-	const GLchar* shaderSource = shaderLoader.LoadShader(path);
-
-	// Attach the shader source code to the shader object
-	glShaderSource(fragmentShader, 1, &shaderSource, NULL);
-	delete[] shaderSource; // Don't forget to free the memory after use
-
-	// Compile the shader
-	glCompileShader(fragmentShader);
-
-	// check for shader compilation errors
-	CheckShaderCompilation(fragmentShader);
-
-	return fragmentShader;
-}
-
-void Shader::CreateShaderProgram(unsigned int vertexShader, unsigned int fragmentShader)
-{
-	shaderProgram = glCreateProgram();
-
-	// Attach the shaders to the shader program
-	glAttachShader(shaderProgram, vertexShader);
-	glAttachShader(shaderProgram, fragmentShader);
-
-	// Link the shaders
-	glLinkProgram(shaderProgram);
-
-	// Check for linking errors
-	CheckShaderProgramCompilation(shaderProgram);
-
-	glDeleteShader(vertexShader); // since the shaders are linked to the shader program, we can delete them
-	glDeleteShader(fragmentShader);
-}
-
-void Shader::UseShaderProgram()
-{
-	glUseProgram(shaderProgram);
-
-}
-
-unsigned int Shader::GetShaderProgram()
-{
-	return shaderProgram;
-}
-
-int Shader::GetUniformLocation(const char* uniformName)
-{
-	return glGetUniformLocation(shaderProgram, uniformName);
-}
-
-void Shader::setFloat(const std::string& name, float value) const
-{
-	glUniform1f(glGetUniformLocation(shaderProgram, name.c_str()), value);
-}
-
-void Shader::setMat4(const std::string& name, const glm::mat4& mat) const {
-	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, name.c_str()), 1, GL_FALSE, glm::value_ptr(mat));
-}
-
-void Shader::setVec3(const std::string& name, const glm::vec3& value) const
-{
-	glUniform3fv(glGetUniformLocation(shaderProgram, name.c_str()), 1, &value[0]);
-}
-
-void Shader::setVec3(const std::string& name, float X, float Y, float Z) const
-{
-	glUniform3fv(glGetUniformLocation(shaderProgram, name.c_str()), 1, &glm::vec3(X, Y, Z)[0]);
-}
-
-void Shader::setInt(const std::string& name, int value) const
-{
-	glUniform1i(glGetUniformLocation(shaderProgram, name.c_str()), value);
-}
-
-
-void Shader::CheckShaderCompilation(unsigned int shader)
-{
-	int success;
-	char infoLog[512];
-	glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
-	if (!success)
-	{
-		glGetShaderInfoLog(shader, 512, NULL, infoLog);
-		std::cout << "ERROR::SHADER::COMPILATION_FAILED\n" << infoLog << std::endl;
-	}
-}
-
-void Shader::CheckShaderProgramCompilation(unsigned int shaderProgram)
-{
-	int success;
-	char infoLog[512];
-	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-	if (!success)
-	{
-		glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
-		std::cout << "ERROR::SHADER::PROGRAM::COMPILATION_FAILED\n" << infoLog << std::endl;
-	}
-}
+//#include "Shader.h"
+//#include "ShaderLoader.h"
+//#include <iostream>
+//#include <glad/glad.h>
+//#include <GLFW/glfw3.h>
+//#include <string>
+//
+//
+//Shader::Shader()
+//{
+//}
+//
+//Shader::~Shader()
+//{
+//}
+//
+//GLuint Shader::CreateVertexShader(std::string path)
+//{
+//	vertexShader = glCreateShader(GL_VERTEX_SHADER);
+//
+//	// Retrieve the shader source code from the file
+//	ShaderLoader shaderLoader;
+//	const GLchar* shaderSource = shaderLoader.LoadShader(path);
+//	
+//	// Attach the shader source code to the shader object
+//	glShaderSource(vertexShader, 1, &shaderSource, NULL);
+//	delete[] shaderSource; // Don't forget to free the memory after use
+//
+//	// Compile the shader
+//	glCompileShader(vertexShader);
+//
+//	// check for shader compilation errors
+//	CheckShaderCompilation(vertexShader);
+//
+//	return vertexShader;
+//}
+//
+//GLuint Shader::CreateFragmentShader(std::string path)
+//{
+//	fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+//
+//	// Retrieve the shader source code from the file
+//	ShaderLoader shaderLoader;
+//	const GLchar* shaderSource = shaderLoader.LoadShader(path);
+//
+//	// Attach the shader source code to the shader object
+//	glShaderSource(fragmentShader, 1, &shaderSource, NULL);
+//	delete[] shaderSource; // Don't forget to free the memory after use
+//
+//	// Compile the shader
+//	glCompileShader(fragmentShader);
+//
+//	// check for shader compilation errors
+//	CheckShaderCompilation(fragmentShader);
+//
+//	return fragmentShader;
+//}
+//
+//void Shader::CreateShaderProgram(unsigned int vertexShader, unsigned int fragmentShader)
+//{
+//	shaderProgram = glCreateProgram();
+//
+//	// Attach the shaders to the shader program
+//	glAttachShader(shaderProgram, vertexShader);
+//	glAttachShader(shaderProgram, fragmentShader);
+//
+//	// Link the shaders
+//	glLinkProgram(shaderProgram);
+//
+//	// Check for linking errors
+//	CheckShaderProgramCompilation(shaderProgram);
+//
+//	glDeleteShader(vertexShader); // since the shaders are linked to the shader program, we can delete them
+//	glDeleteShader(fragmentShader);
+//}
+//
+//void Shader::UseShaderProgram()
+//{
+//	glUseProgram(shaderProgram);
+//
+//}
+//
+//unsigned int Shader::GetShaderProgram()
+//{
+//	return shaderProgram;
+//}
+//
+//int Shader::GetUniformLocation(const char* uniformName)
+//{
+//	return glGetUniformLocation(shaderProgram, uniformName);
+//}
+//
+//void Shader::setFloat(const std::string& name, float value) const
+//{
+//	glUniform1f(glGetUniformLocation(shaderProgram, name.c_str()), value);
+//}
+//
+//void Shader::setMat4(const std::string& name, const glm::mat4& mat) const {
+//	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, name.c_str()), 1, GL_FALSE, glm::value_ptr(mat));
+//}
+//
+//void Shader::setVec3(const std::string& name, const glm::vec3& value) const
+//{
+//	glUniform3fv(glGetUniformLocation(shaderProgram, name.c_str()), 1, &value[0]);
+//}
+//
+//void Shader::setVec3(const std::string& name, float X, float Y, float Z) const
+//{
+//	glUniform3fv(glGetUniformLocation(shaderProgram, name.c_str()), 1, &glm::vec3(X, Y, Z)[0]);
+//}
+//
+//void Shader::setInt(const std::string& name, int value) const
+//{
+//	glUniform1i(glGetUniformLocation(shaderProgram, name.c_str()), value);
+//}
+//
+//unsigned int Shader::GetShaderProgram() const
+//{
+//	return shaderProgram;
+//}
+//
+//
+//void Shader::CheckShaderCompilation(unsigned int shader)
+//{
+//	int success;
+//	char infoLog[512];
+//	glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+//	if (!success)
+//	{
+//		glGetShaderInfoLog(shader, 512, NULL, infoLog);
+//		std::cout << "ERROR::SHADER::COMPILATION_FAILED\n" << infoLog << std::endl;
+//	}
+//}
+//
+//void Shader::CheckShaderProgramCompilation(unsigned int shaderProgram)
+//{
+//	int success;
+//	char infoLog[512];
+//	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
+//	if (!success)
+//	{
+//		glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
+//		std::cout << "ERROR::SHADER::PROGRAM::COMPILATION_FAILED\n" << infoLog << std::endl;
+//	}
+//}
