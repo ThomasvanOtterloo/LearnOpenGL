@@ -57,6 +57,7 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 		else
 			vertex.TexCoords = glm::vec2(0.0f, 0.0f);
 
+		
         vertices.push_back(vertex);
     }
     // process indices
@@ -161,9 +162,12 @@ unsigned int Model::TextureFromFile(const char* path, const string & directory, 
     }
     else
     {
-        std::cout << "Texture failed to load at path: " << path << std::endl;
+       // std::cout << "Texture failed to load at path: " << path << std::endl;
         stbi_image_free(data);
     }
 
     return textureID;
 }
+
+
+

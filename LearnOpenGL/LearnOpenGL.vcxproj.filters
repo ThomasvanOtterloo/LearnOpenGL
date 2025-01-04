@@ -63,6 +63,12 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WindowManager.h">
@@ -98,6 +104,15 @@
     <ClInclude Include="Camera.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Vertex.vert">
@@ -112,6 +127,14 @@
     <None Include="VertexLightSource.vert">
       <Filter>res\shaders</Filter>
     </None>
+    <None Include="model_loading.fs" />
+    <None Include="model_loading.vs" />
+    <None Include="depth_testing.vert">
+      <Filter>res\shaders</Filter>
+    </None>
+    <None Include="depth_testing.frag">
+      <Filter>res\shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\..\..\..\..\Downloads\container.jpg">
@@ -121,6 +144,9 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="..\..\..\..\..\..\..\Downloads\container2_specular.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\..\..\Downloads\matrix.jpg">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

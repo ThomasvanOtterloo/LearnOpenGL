@@ -23,6 +23,8 @@ public:
         loadModel(path);
     }
     void Draw(Shader& shader);
+   // void getMeshAndDraw(Mesh* mesh, Shader shader);
+	//Mesh getIndex(int index) { return meshes[index]; }
 private:
     // model data
     vector<Mesh> meshes;
@@ -36,5 +38,7 @@ private:
     vector<Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type,
         string typeName);
     unsigned int TextureFromFile(const char* path, const string& directory, bool gamma = false);
+
+	
 };
 
